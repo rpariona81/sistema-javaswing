@@ -34,7 +34,9 @@ public class CategoriaDAO implements CrudSimpleInterface<Categoria> {
     public List<Categoria> listar(String texto) {
         List<Categoria> registros = new ArrayList();
         try {
-            ps = CONN.conectar().prepareStatement("SELECT * FROM categoria WHERE nombre LIKE ?");
+            ps = CONN.conectar().prepareStatement("SELECT * FROM categoria WHERE nombre LIKE ?", 
+                    ResultSet.TYPE_SCROLL_INSENSITIVE, 
+                    ResultSet.CONCUR_READ_ONLY);
             ps.setString(1, "%" + texto + "%");
             rs = ps.executeQuery();
             //rs.last();
@@ -64,7 +66,8 @@ public class CategoriaDAO implements CrudSimpleInterface<Categoria> {
     public boolean insertar(Categoria obj) {
         resp = false;
         try {
-            ps = CONN.conectar().prepareStatement("INSERT INTO categoria(nombre,descripcion,activo) VALUES(?,?,1)");
+            ps = CONN.conectar().prepareStatement("INSERT INTO categoria(nombre,descripcion,activo) VALUES(?,?,1)"); 
+                    //ResultSet.TYPE_FORWARD_ONLY);
             ps.setString(1, obj.getNombre());
             ps.setString(2, obj.getDescripcion());
             //ps.executeUpdate();
@@ -77,7 +80,7 @@ public class CategoriaDAO implements CrudSimpleInterface<Categoria> {
             ps.close();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
-            //System.err.println(e.getMessage());
+            System.err.println(e.getMessage());
         } finally {
             ps = null;
             CONN.desconectar();
@@ -169,7 +172,10 @@ public class CategoriaDAO implements CrudSimpleInterface<Categoria> {
     public boolean existe(String texto) {
         resp = false;
         try {
-            ps = CONN.conectar().prepareStatement("SELECT nombre FROM categoria WHERE nombre=?");
+            ps = CONN.conectar().prepareStatement("SELECT nombre FROM categoria WHERE nombre = ?",
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            //ps = CONN.conectar().prepareStatement("SELECT nombre FROM categoria WHERE nombre = ?", ResultSet.TYPE_FORWARD_ONLY,ResultSet.CONCUR_READ_ONLY);
             ps.setString(1, texto);
             rs = ps.executeQuery();
             rs.last();

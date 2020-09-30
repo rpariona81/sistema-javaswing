@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  *
  * @author JRonald
  */
-public final class Conexion {
+public final class ConexionSQLServer {
 
     private static String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     private static String URL = "jdbc:sqlserver://localhost:1263;databaseName=";
@@ -25,9 +25,9 @@ public final class Conexion {
     private static String USER = "sa";
     private static String PASSWORD = "JPariona2020";
     public Connection cadena;
-    public static Conexion instancia;
+    public static ConexionSQLServer instancia;
 
-    private Conexion() {
+    private ConexionSQLServer() {
         this.cadena = null;
     }
 
@@ -52,9 +52,9 @@ public final class Conexion {
     }
 
     //Agregamos la opcion sincronizado para ordenar las transacciones
-    public synchronized static Conexion getInstancia() {
-        if (instancia == null) {
-            instancia = new Conexion();
+    public synchronized static ConexionSQLServer getInstancia() {
+        if (null == instancia) {
+            instancia = new ConexionSQLServer();
         }
         return instancia;
     }

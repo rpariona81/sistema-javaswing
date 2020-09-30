@@ -56,9 +56,12 @@ public class CategoriaControl {
     }
 
     public String insertar(String nombre, String descripcion) {
+        String result = "";
         if (DATOS.existe(nombre)) {
-            return "El registro ya existe";
-        } else {
+            System.out.println("El registro ya existe");
+            //return "El registro ya existe";
+            result = "El registro ya existe";
+        }else {
             obj.setNombre(nombre);
             obj.setDescripcion(descripcion);
             if (DATOS.insertar(obj)) {
@@ -67,6 +70,12 @@ public class CategoriaControl {
                 return "Error en el registro.";
             }
         }
+ /*
+        obj.setNombre(nombre);
+        obj.setDescripcion(descripcion);
+        DATOS.insertar(obj);
+        return "OK"; */
+        return result;
     }
 
     public String actualizar(int id, String nombre, String nombreAnt, String descripcion) {
@@ -114,8 +123,8 @@ public class CategoriaControl {
     public int total() {
         return DATOS.total();
     }
-    
-    public int totalMostrados(){
+
+    public int totalMostrados() {
         return this.registrosMostrados;
     }
 }
