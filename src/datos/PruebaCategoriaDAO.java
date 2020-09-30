@@ -5,6 +5,7 @@
  */
 package datos;
 
+import entidades.Categoria;
 import java.sql.SQLException;
 
 /**
@@ -14,7 +15,10 @@ import java.sql.SQLException;
 public class PruebaCategoriaDAO {
     public static void main(String[] args) throws SQLException{
         CategoriaDAO TEST = new CategoriaDAO();
-        TEST.listar("");
-        
+        TEST.listar("").toString();
+        Categoria obj=new Categoria();
+        obj.setNombre("Abarrotes");
+        obj.setDescripcion("Abarrotes en general: azúcar, arroz, aceite, etc.");
+        TEST.insertar(obj);
     }
 }

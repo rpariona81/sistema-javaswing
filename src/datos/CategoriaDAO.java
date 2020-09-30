@@ -34,20 +34,22 @@ public class CategoriaDAO implements CrudSimpleInterface<Categoria> {
     public List<Categoria> listar(String texto) {
         List<Categoria> registros = new ArrayList();
         try {
-            ps = CONN.conectar().prepareStatement("SELECT * FROM categoria WHERE LCASE(nombre) LIKE ?");
+            ps = CONN.conectar().prepareStatement("SELECT * FROM categoria WHERE nombre LIKE ?");
             ps.setString(1, "%" + texto + "%");
             rs = ps.executeQuery();
             //rs.last();
             //if (rs.getRow() > 0) {
-                CategoriaMapper mapper = new CategoriaMapper();
-                while (rs.next()) {
-                    Categoria bean = mapper.mapRow(rs);
-                    registros.add(bean);
-                }
+            //    CategoriaMapper mapper = new CategoriaMapper();
+            while (rs.next()) {
+                /*Categoria bean = mapper.mapRow(rs);
+                    registros.add(bean);*/
+                registros.add(new Categoria(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getBoolean(4)));
+            }
             //} else {
             //    JOptionPane.showMessageDialog(null, "No hay registros que mostrar");
             //}
             ps.close();
+            rs.close();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         } finally {
@@ -65,12 +67,17 @@ public class CategoriaDAO implements CrudSimpleInterface<Categoria> {
             ps = CONN.conectar().prepareStatement("INSERT INTO categoria(nombre,descripcion,activo) VALUES(?,?,1)");
             ps.setString(1, obj.getNombre());
             ps.setString(2, obj.getDescripcion());
+            //ps.executeUpdate();
+            /*rs=ps.getGeneratedKeys();
+            System.err.println("Row:"+rs.getInt(1));
+            if (rs.getInt(1) > 0) {*/
             if (ps.executeUpdate() > 0) {
                 resp = true;
             }
             ps.close();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
+            //System.err.println(e.getMessage());
         } finally {
             ps = null;
             CONN.desconectar();
@@ -104,7 +111,7 @@ public class CategoriaDAO implements CrudSimpleInterface<Categoria> {
         resp = false;
         try {
             ps = CONN.conectar().prepareStatement("UPDATE categoria SET activo=0 WHERE id=?");
-            ps.setInt(3, id);
+            ps.setInt(1, id);
             if (ps.executeUpdate() > 0) {
                 resp = true;
             }
@@ -123,7 +130,7 @@ public class CategoriaDAO implements CrudSimpleInterface<Categoria> {
         resp = false;
         try {
             ps = CONN.conectar().prepareStatement("UPDATE categoria SET activo=1 WHERE id=?");
-            ps.setInt(3, id);
+            ps.setInt(1, id);
             if (ps.executeUpdate() > 0) {
                 resp = true;
             }
@@ -166,8 +173,8 @@ public class CategoriaDAO implements CrudSimpleInterface<Categoria> {
             ps.setString(1, texto);
             rs = ps.executeQuery();
             rs.last();
-            if(rs.getRow()>0){
-                resp=true;
+            if (rs.getRow() > 0) {
+                resp = true;
             }
             ps.close();
             rs.close();
