@@ -127,6 +127,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         mnuSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/images/salir.png"))); // NOI18N
         mnuSalir.setText("Salir");
+        mnuSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuSalirActionPerformed(evt);
+            }
+        });
         menuBar.add(mnuSalir);
 
         setJMenuBar(menuBar);
@@ -158,6 +163,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void mnuAlmacenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAlmacenActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_mnuAlmacenActionPerformed
+
+    private void mnuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSalirActionPerformed
+        //System.exit(0);        
+        //this.dispose();
+    }//GEN-LAST:event_mnuSalirActionPerformed
 
     /**
      * @param args the command line arguments

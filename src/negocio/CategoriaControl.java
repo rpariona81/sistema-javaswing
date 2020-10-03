@@ -34,9 +34,10 @@ public class CategoriaControl {
 
         String[] titulos = {"id", "Nombre", "Descripción", "Estado"};
         this.modeloTabla = new DefaultTableModel(null, titulos);
-
+        
         String estado;
-        String[] registro = new String[4];
+        //String[] registro = new String[4];
+        Object[] registro = new Object[4];
 
         this.registrosMostrados = 0;
         for (Categoria item : lista) {
@@ -45,7 +46,8 @@ public class CategoriaControl {
             } else {
                 estado = "Inactivo";
             }
-            registro[0] = Integer.toString(item.getId());
+            //registro[0] = Integer.toString(item.getId());
+            registro[0] = item.getId();
             registro[1] = item.getNombre();
             registro[2] = item.getDescripcion();
             registro[3] = estado;
@@ -61,7 +63,7 @@ public class CategoriaControl {
             System.out.println("El registro ya existe");
             //return "El registro ya existe";
             result = "El registro ya existe";
-        }else {
+        } else {
             obj.setNombre(nombre);
             obj.setDescripcion(descripcion);
             if (DATOS.insertar(obj)) {
@@ -70,7 +72,7 @@ public class CategoriaControl {
                 return "Error en el registro.";
             }
         }
- /*
+        /*
         obj.setNombre(nombre);
         obj.setDescripcion(descripcion);
         DATOS.insertar(obj);
