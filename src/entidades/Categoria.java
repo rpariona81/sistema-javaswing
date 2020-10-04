@@ -20,6 +20,12 @@ public class Categoria {
         
     }
 
+    public Categoria(int id, String nombre) {
+        this.id = id;
+        this.nombre = nombre;
+    }
+    
+
     public Categoria(int id, String nombre, String descripcion, boolean activo) {
         this.id = id;
         this.nombre = nombre;
@@ -65,7 +71,7 @@ public class Categoria {
 
     @Override
     public String toString() {
-        return "Categoria{" + "id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", activo=" + activo + '}';
+        return nombre;
     }
     
     

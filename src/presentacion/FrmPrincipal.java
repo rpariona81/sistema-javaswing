@@ -77,6 +77,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         mnuAlmacen.add(jMenuItem1);
 
         jMenuItem2.setText("Artículos");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         mnuAlmacen.add(jMenuItem2);
 
         menuBar.add(mnuAlmacen);
@@ -168,6 +173,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
         //System.exit(0);        
         //this.dispose();
     }//GEN-LAST:event_mnuSalirActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        FrmArticulo frm=new FrmArticulo();
+        escritorio.add(frm);
+        frm.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
