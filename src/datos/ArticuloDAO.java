@@ -105,7 +105,7 @@ public class ArticuloDAO implements CrudPaginadoInterface<Articulo> {
     public boolean actualizar(Articulo obj) {
         resp = false;
         try {
-            ps = CONN.conectar().prepareStatement("UPDATE articulo SET categoria_id=?, codigo=?, nombre=?, precio_venta=', stock='?, descripcion=?, imagen=?, descripcion=? WHERE id=?");
+            ps = CONN.conectar().prepareStatement("UPDATE articulo SET categoria_id=?, codigo=?, nombre=?, precio_venta=?, stock=?, descripcion=?, imagen=? WHERE id=?");
             ps.setInt(1, obj.getCategoriaId());
             ps.setString(2, obj.getCodigo());
             ps.setString(3, obj.getNombre());

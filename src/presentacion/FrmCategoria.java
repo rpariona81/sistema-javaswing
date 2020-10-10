@@ -5,11 +5,15 @@
  */
 package presentacion;
 
+import java.awt.Component;
 import java.util.Comparator;
+import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
@@ -20,7 +24,7 @@ import negocio.CategoriaControl;
  * @author JRonald
  */
 public class FrmCategoria extends javax.swing.JInternalFrame {
-
+    
     private final CategoriaControl CONTROL;
     private String accion;
     private String nombreAnt;
@@ -36,8 +40,9 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
         this.accion = "guardar";
         this.txtId.setVisible(false);
     }
-
+    
     private void listar(String texto) {
+        
         tablaListado.setModel(this.CONTROL.listar(texto));
         TableRowSorter orden = new TableRowSorter(tablaListado.getModel());
         DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
@@ -48,6 +53,9 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
         tableColumns.getColumn(1).setPreferredWidth(100);
         tableColumns.getColumn(2).setPreferredWidth(300);
         tableColumns.getColumn(3).setPreferredWidth(50);
+        TableCellRenderer renderer= tablaListado.getCellRenderer(0, 0);
+        Component comp = renderer.getTableCellRendererComponent(tablaListado, "123", false, false, 0, 0);
+        tablaListado.setRowHeight(new Double(comp.getPreferredSize().getHeight()).intValue() + 5);
         System.out.println("Tipo:" + tableColumns.getColumn(0).getWidth());
         orden.setComparator(0, (Object o1, Object o2) -> {
             Integer int1 = (Integer) o1;
@@ -57,20 +65,20 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
         System.out.println("Tipo:" + tablaListado.getColumnClass(0));
         
         tablaListado.setRowSorter(orden);
-
+        
         lblTotalRegistros.setText("Mostrando " + this.CONTROL.totalMostrados() + " de un total de " + this.CONTROL.total() + " registros.");
     }
-
+    
     private void limpiar() {
         txtNombre.setText("");
         txtDescripcion.setText("");
-        this.accion="guardar";
+        this.accion = "guardar";
     }
-
+    
     private void mensajeError(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje, "Sistema", JOptionPane.ERROR_MESSAGE);
     }
-
+    
     private void mensajeOk(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje, "Sistema", JOptionPane.INFORMATION_MESSAGE);
     }
@@ -214,13 +222,13 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
                     .addComponent(btnEditar)
                     .addComponent(btnNuevo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTotalRegistros)
                     .addComponent(btnDesactivar)
                     .addComponent(btnActivar))
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         tabGeneral.addTab("Listado", jPanel1);
@@ -379,11 +387,11 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
             String nombre = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 1));
             this.nombreAnt = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 1));
             String descripcion = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 2));
-
+            
             txtId.setText(id);
             txtNombre.setText(nombre);
             txtDescripcion.setText(descripcion);
-
+            
             tabGeneral.setEnabledAt(0, false);
             tabGeneral.setEnabledAt(1, true);
             tabGeneral.setSelectedIndex(1);
