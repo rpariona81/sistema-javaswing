@@ -213,3 +213,6 @@ CREATE INDEX fk_detalle_venta_venta_id ON detalle_venta (venta_id ASC);
 
 CREATE INDEX fk_detalle_venta_articulo_id ON detalle_venta (articulo_id ASC);
 
+INSERT INTO rol(nombre, descripcion) VALUES('Administrador','Administrador del sistema');
+INSERT INTO rol(nombre, descripcion) VALUES('Vendedor','Vendedor del sistema');
+INSERT INTO rol(nombre, descripcion) VALUES('Almacenero','Almacenero del sistema');
