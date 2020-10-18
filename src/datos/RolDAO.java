@@ -63,7 +63,7 @@ public class RolDAO {
     public List<Rol> seleccionar() {
         List<Rol> registros = new ArrayList();
         try {
-            ps = CONN.conectar().prepareStatement("SELECT id, nombre FROM rol ORDER BY nombres ASC",
+            ps = CONN.conectar().prepareStatement("SELECT id, nombre FROM rol ORDER BY nombre ASC",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
             rs = ps.executeQuery();

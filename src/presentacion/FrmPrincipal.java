@@ -120,6 +120,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         mnuAcceso.add(jMenuItem7);
 
         jMenuItem8.setText("Usuarios");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
         mnuAcceso.add(jMenuItem8);
 
         menuBar.add(mnuAcceso);
@@ -165,7 +170,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        FrmCategoria frm=new FrmCategoria();
+        FrmCategoria frm = new FrmCategoria();
         escritorio.add(frm);
         frm.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
@@ -180,16 +185,22 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuSalirActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        FrmArticulo frm=new FrmArticulo();
+        FrmArticulo frm = new FrmArticulo();
         escritorio.add(frm);
         frm.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        FrmRol frm=new FrmRol();
+        FrmRol frm = new FrmRol();
         escritorio.add(frm);
         frm.setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        FrmUsuario frm = new FrmUsuario();
+        escritorio.add(frm);
+        frm.setVisible(true);
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     /**
      * @param args the command line arguments
