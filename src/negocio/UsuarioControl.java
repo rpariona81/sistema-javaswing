@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
+import utilidades.BCrypt;
 
 /**
  *
@@ -83,6 +84,7 @@ public class UsuarioControl {
 
     private static String encriptar(String valor) {
         MessageDigest md;
+        
         try {
             md = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException e) {
@@ -97,6 +99,8 @@ public class UsuarioControl {
         }
 
         return sb.toString();
+        
+        //return BCrypt.hashpw(valor, BCrypt.gensalt());
     }
 
     public String insertar(int rolId, String nombre, String tipoDocumento, String numDocumento, String direccion, String telefono, String email, String clave) {
@@ -128,7 +132,7 @@ public class UsuarioControl {
         return result;
     }
 
-    public String actualizar(int id,int rolId, String nombre, String tipoDocumento, String numDocumento, String direccion, String telefono, String email, String emailAnt, String clave) {
+    public String actualizar(int id, int rolId, String nombre, String tipoDocumento, String numDocumento, String direccion, String telefono, String email, String emailAnt, String clave) {
         if (email.equals(emailAnt)) {
             obj.setId(id);
             obj.setRolId(rolId);
@@ -139,13 +143,13 @@ public class UsuarioControl {
             obj.setTelefono(telefono);
             obj.setEmail(email);
 
-            String ecncriptado;
+            String encriptado;
             if (clave.length() == 64) {
-                ecncriptado = clave;
+                encriptado = clave;
             } else {
-                ecncriptado = this.encriptar(clave);
+                encriptado = this.encriptar(clave);
             }
-            obj.setClave(ecncriptado);
+            obj.setClave(encriptado);
 
             if (DATOS.actualizar(obj)) {
                 return "OK";
@@ -165,13 +169,13 @@ public class UsuarioControl {
                 obj.setTelefono(telefono);
                 obj.setEmail(email);
 
-                String ecncriptado;
+                String encriptado;
                 if (clave.length() == 64) {
-                    ecncriptado = clave;
+                    encriptado = clave;
                 } else {
-                    ecncriptado = this.encriptar(clave);
+                    encriptado = this.encriptar(clave);
                 }
-                obj.setClave(ecncriptado);
+                obj.setClave(encriptado);
 
                 if (DATOS.actualizar(obj)) {
                     return "OK";

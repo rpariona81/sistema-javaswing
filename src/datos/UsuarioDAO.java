@@ -126,12 +126,14 @@ public class UsuarioDAO implements CrudPaginadoInterface<Usuario> {
             ps.setString(5, obj.getDireccion());
             ps.setString(6, obj.getTelefono());
             ps.setString(7, obj.getEmail());
-
+            ps.setString(8, obj.getClave());
+            ps.setInt(9, obj.getId());
+            System.out.println("Actualizacion en curso...");
             if (ps.executeUpdate() > 0) {
                 resp = true;
             }
-            ps.setInt(9, obj.getId());
             ps.close();
+            System.out.println("Actualizacion finalizada.");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         } finally {
