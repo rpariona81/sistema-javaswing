@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
-import utilidades.BCrypt;
 
 /**
  *
@@ -72,6 +71,24 @@ public class UsuarioControl {
         return this.modeloTabla;
     }
 
+    public String login(String email, String clave) {
+        String resp = "0";
+        Usuario usuario = this.DATOS.login(email, encriptar(clave));
+        if (usuario != null) {
+            if (usuario.isActivo()) {
+                Variables.usuarioId = usuario.getId();
+                Variables.rolId = usuario.getRolId();
+                Variables.rolNombre = usuario.getRolNombre();
+                Variables.usuarioNombre = usuario.getNombre();
+                Variables.usuarioEmail = usuario.getEmail();
+                resp = "1";
+            } else {
+                resp = "2";
+            }
+        }
+        return resp;
+    }
+
     public DefaultComboBoxModel seleccionar() {
         DefaultComboBoxModel items = new DefaultComboBoxModel();
         List<Rol> listaRol = new ArrayList<>();
@@ -84,7 +101,7 @@ public class UsuarioControl {
 
     private static String encriptar(String valor) {
         MessageDigest md;
-        
+
         try {
             md = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException e) {
@@ -99,7 +116,7 @@ public class UsuarioControl {
         }
 
         return sb.toString();
-        
+
         //return BCrypt.hashpw(valor, BCrypt.gensalt());
     }
 

@@ -106,6 +106,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         mnuVentas.setText("Ventas");
 
         jMenuItem5.setText("Clientes");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         mnuVentas.add(jMenuItem5);
 
         jMenuItem6.setText("Ventas");
@@ -185,8 +190,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuAlmacenActionPerformed
 
     private void mnuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSalirActionPerformed
-        //System.exit(0);        
-        //this.dispose();
+        this.dispose();
+        System.exit(0);        
     }//GEN-LAST:event_mnuSalirActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -212,6 +217,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
         escritorio.add(frm);
         frm.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        FrmCliente frm = new FrmCliente();
+        escritorio.add(frm);
+        frm.setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
      * @param args the command line arguments

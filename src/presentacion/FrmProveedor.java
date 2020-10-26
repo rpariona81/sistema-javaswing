@@ -5,29 +5,14 @@
  */
 package presentacion;
 
-import entidades.Categoria;
-import entidades.Rol;
 import java.awt.Component;
-import java.awt.Image;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
-import negocio.ArticuloControl;
 import negocio.PersonaControl;
-import negocio.UsuarioControl;
 
 /**
  *
@@ -199,7 +184,8 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setTitle("Usuarios");
+        setResizable(true);
+        setTitle("Proveedores");
 
         tabGeneral.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -400,7 +386,7 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
         txtTelefono.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel8.setText("Email (*)");
+        jLabel8.setText("Email");
 
         txtEmail.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
 

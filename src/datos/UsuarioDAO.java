@@ -228,4 +228,46 @@ public class UsuarioDAO implements CrudPaginadoInterface<Usuario> {
         return resp;
     }
 
+    public Usuario login(String email, String clave) {
+        Usuario usuario = null;
+        try {
+            /*SQL Server 2019 y DB2*/
+            ps = CONN.conectar().prepareStatement("SELECT u.id, u.rol_id, r.nombre as rol_nombre,"
+                    + " u.nombre, u.tipo_documento, u.num_documento, u.direccion, u.telefono, u.email, u.activo "
+                    + " FROM usuario u INNER JOIN rol r ON u.rol_id=r.id"
+                    + " WHERE u.email = ? AND u.clave = ?",
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            ps.setString(1, email);
+            ps.setString(2, clave);
+            rs = ps.executeQuery();
+
+            if (rs.first()) {
+                usuario = new Usuario(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getBoolean(10));
+            }
+            //} else {
+            //    JOptionPane.showMessageDialog(null, "No hay registros que mostrar");
+            //}
+            ps.close();
+            rs.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            ps = null;
+            rs = null;
+            CONN.desconectar();
+        }
+        return usuario;
+    }
+
 }
