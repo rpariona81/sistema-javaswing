@@ -271,7 +271,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuSalirMouseClicked
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        FrmIngreso frm = new FrmIngreso();
+        FrmIngreso frm = new FrmIngreso(this);
         escritorio.add(frm);
         frm.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed

@@ -5,7 +5,9 @@
  */
 package negocio;
 
+import datos.ArticuloDAO;
 import datos.IngresoDAO;
+import entidades.Articulo;
 import entidades.DetalleIngreso;
 import entidades.Ingreso;
 import java.text.SimpleDateFormat;
@@ -20,12 +22,14 @@ import javax.swing.table.DefaultTableModel;
 public class IngresoControl {
 
     private final IngresoDAO DATOS;
+    private final ArticuloDAO DATOSART;
     private Ingreso obj;
     private DefaultTableModel modeloTabla;
     public int registrosMostrados;
 
     public IngresoControl() {
         this.DATOS = new IngresoDAO();
+        this.DATOSART = new ArticuloDAO();
         this.obj = new Ingreso();
         this.registrosMostrados = 0;
     }
@@ -64,6 +68,11 @@ public class IngresoControl {
         return this.modeloTabla;
     }
 
+    public Articulo obteneArticuloCodigoIngreso(String codigo){
+        Articulo art = DATOSART.obtenerArticuloCodigoIngreso(codigo);
+        return art;
+    }
+    
     public String insertar(int personaId, String tipoComprobante, String serieComprobante, String numComprobante, double impuesto, double total, DefaultTableModel modeloDetalles) {
         String result = "";
         if (DATOS.existe(serieComprobante,numComprobante)) {

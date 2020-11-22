@@ -24,6 +24,14 @@ public class Articulo {
     public Articulo() {
     }
 
+    public Articulo(int id, String codigo, String nombre, double precioVenta,int stock) {
+        this.id = id;
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.precioVenta = precioVenta;
+        this.stock = stock;
+    }
+
     public Articulo(int id, int categoriaId, String categoriaNombre, String codigo, String nombre, double precioVenta, int stock, String descripcion, String imagen, boolean activo) {
         this.id = id;
         this.categoriaId = categoriaId;

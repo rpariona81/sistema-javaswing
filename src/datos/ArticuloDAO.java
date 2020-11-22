@@ -70,6 +70,33 @@ public class ArticuloDAO implements CrudPaginadoInterface<Articulo> {
         return registros;
     }
 
+    public Articulo obtenerArticuloCodigoIngreso(String codigo){
+        Articulo art = new Articulo();
+        try {
+            /*SQL Server 2019 y DB2*/
+            ps = CONN.conectar().prepareStatement("SELECT a.id, "
+                    + " a.codigo, a.nombre, a.precio_venta, a.stock"
+                    + " FROM articulo a WHERE a.codigo = ?",
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            ps.setString(1, codigo);
+            rs = ps.executeQuery();
+            
+            if (rs.first()) {
+                art = new Articulo(rs.getInt(1), rs.getString(2),rs.getString(3),rs.getDouble(4),rs.getInt(5));
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        } finally {
+            ps = null;
+            rs = null;
+            CONN.desconectar();
+        }
+        return art;
+    }
+    
     @Override
     public boolean insertar(Articulo obj) {
         resp = false;
