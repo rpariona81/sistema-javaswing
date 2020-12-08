@@ -73,7 +73,13 @@ public class IngresoControl {
         return art;
     }
     
-    public String insertar(int personaId, String tipoComprobante, String serieComprobante, String numComprobante, double impuesto, double total, DefaultTableModel modeloDetalles) {
+    public String insertar(int personaId, 
+            String tipoComprobante, 
+            String serieComprobante, 
+            String numComprobante, 
+            double impuesto, 
+            double total, 
+            DefaultTableModel modeloDetalles) {
         String result = "";
         if (DATOS.existe(serieComprobante,numComprobante)) {
             System.out.println("El registro ya existe");

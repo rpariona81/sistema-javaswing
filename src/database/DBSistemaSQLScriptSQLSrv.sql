@@ -109,7 +109,7 @@ CREATE TABLE ingreso (
   tipo_comprobante VARCHAR(20) NOT NULL,
   serie_comprobante VARCHAR(7) NULL,
   num_comprobante VARCHAR(10) NOT NULL,
-  fecha TIMESTAMP NOT NULL,
+  fecha DATETIME,
   impuesto DECIMAL(4,2) NOT NULL,
   total DECIMAL(11,2) NOT NULL,
   estado VARCHAR(20) NOT NULL DEFAULT 'Aceptado',
@@ -166,7 +166,7 @@ CREATE TABLE venta (
   tipo_comprobante VARCHAR(20) NOT NULL,
   serie_comprobante VARCHAR(7) NULL,
   num_comprobante VARCHAR(10) NOT NULL,
-  fecha TIMESTAMP NOT NULL,
+  fecha DATETIME,
   impuesto DECIMAL(4,2) NOT NULL,
   total DECIMAL(11,2) NOT NULL,
   estado VARCHAR(20) NOT NULL DEFAULT 'Aceptado',
@@ -216,3 +216,16 @@ CREATE INDEX fk_detalle_venta_articulo_id ON detalle_venta (articulo_id ASC);
 INSERT INTO rol(nombre, descripcion) VALUES('Administrador','Administrador del sistema');
 INSERT INTO rol(nombre, descripcion) VALUES('Vendedor','Vendedor del sistema');
 INSERT INTO rol(nombre, descripcion) VALUES('Almacenero','Almacenero del sistema');
+
+/*trigger para actualizar stock en cada ingreso*/
+CREATE TRIGGER tr_updStockIngreso ON detalle_ingreso 
+AFTER INSERT 
+AS 
+DECLARE @CANT INT 
+DECLARE @ID_ART_DET_ING INT 
+SET @CANT= (SELECT cantidad FROM inserted)
+SET @ID_ART_DET_ING= (SELECT articulo_id FROM inserted)
+BEGIN 
+	UPDATE articulo SET articulo.stock = articulo.stock + @CANT 
+	WHERE articulo.id = @ID_ART_DET_ING;
+END;

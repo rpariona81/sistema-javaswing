@@ -109,10 +109,10 @@ CREATE TABLE ingreso (
   tipo_comprobante VARCHAR(20) NOT NULL,
   serie_comprobante VARCHAR(7) NULL,
   num_comprobante VARCHAR(10) NOT NULL,
-  fecha TIMESTAMP NOT NULL,
+  fecha TIMESTAMP,
   impuesto DECIMAL(4,2) NOT NULL,
   total DECIMAL(11,2) NOT NULL,
-  estado VARCHAR(20) NOT NULL DEFAULT 'Aceptado',
+  estado VARCHAR(20),
   PRIMARY KEY (id),
   CONSTRAINT fk_ingreso_persona
     FOREIGN KEY (persona_id)
@@ -166,10 +166,10 @@ CREATE TABLE venta (
   tipo_comprobante VARCHAR(20) NOT NULL,
   serie_comprobante VARCHAR(7) NULL,
   num_comprobante VARCHAR(10) NOT NULL,
-  fecha TIMESTAMP NOT NULL,
+  fecha TIMESTAMP,
   impuesto DECIMAL(4,2) NOT NULL,
   total DECIMAL(11,2) NOT NULL,
-  estado VARCHAR(20) NOT NULL DEFAULT 'Aceptado',
+  estado VARCHAR(20),
   PRIMARY KEY (id),
   CONSTRAINT fk_venta_persona
     FOREIGN KEY (persona_id)
@@ -212,4 +212,13 @@ CREATE TABLE detalle_venta (
 CREATE INDEX fk_detalle_venta_venta_id ON detalle_venta (venta_id ASC);
 
 CREATE INDEX fk_detalle_venta_articulo_id ON detalle_venta (articulo_id ASC);
+
+
+/*trigger para actualizar stock en cada ingreso*/
+CREATE TRIGGER tr_updStockIngreso  
+AFTER INSERT ON detalle_ingreso 
+REFERENCING NEW AS N
+FOR EACH ROW 
+	UPDATE articulo SET articulo.stock = articulo.stock + N.cantidad
+	WHERE articulo.id = N.articulo_id;
 

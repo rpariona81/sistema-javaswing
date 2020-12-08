@@ -92,9 +92,11 @@ public class IngresoDAO implements CrudIngresoInterface<Ingreso, DetalleIngreso>
             connTx = CONN.conectar();
             connTx.setAutoCommit(false);
             //MySQL
-            //String sqlInsertIngreso="INSERT INTO ingreso(persona_id, usuario_id, tipo_comprobante, serie_comprobante, num_comprobante, impuesto, total, estado) VALUES(?,?,GETDATE(),?,?,?,?,?)";
+            //String sqlInsertIngreso="INSERT INTO ingreso (persona_id,usuario_id,fecha,tipo_comprobante,serie_comprobante,num_comprobante,impuesto,total,estado) VALUES (?,?,now(),?,?,?,?,?,?)";
             //SQL Server
-            String sqlInsertIngreso = "INSERT INTO ingreso(persona_id, usuario_id, tipo_comprobante, serie_comprobante, num_comprobante, impuesto, total, estado) VALUES(?,?,GETDATE(),?,?,?,?,?)";
+            //String sqlInsertIngreso = "INSERT INTO ingreso(persona_id, usuario_id, fecha, tipo_comprobante, serie_comprobante, num_comprobante, impuesto, total, estado) VALUES(?,?,GETDATE(),?,?,?,?,?,?)";
+            //DB2
+            String sqlInsertIngreso = "INSERT INTO ingreso(persona_id, usuario_id, fecha, tipo_comprobante, serie_comprobante, num_comprobante, impuesto, total, estado) VALUES(?,?,(SELECT CURRENT TIMESTAMP - 1 DAY - 5 HOUR FROM SYSIBM.SYSDUMMY1),?,?,?,?,?,?)";
             ps = CONN.conectar().prepareStatement(sqlInsertIngreso, PreparedStatement.RETURN_GENERATED_KEYS);
             //ResultSet.TYPE_FORWARD_ONLY);
             ps.setInt(1, obj.getPersonaId());
