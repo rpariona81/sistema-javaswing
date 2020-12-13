@@ -5,7 +5,6 @@
  */
 package presentacion;
 
-import entidades.Articulo;
 import java.awt.Component;
 import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
@@ -228,13 +227,14 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
         txtSerieComprobante.setText("");
         txtNumComprobante.setText("");
         txtImpuesto.setText("0.18");
-        
+
         this.accion = "guardar";
-        
+
         txtTotal.setText("0.00");
         txtSubtotal.setText("0.00");
         txtTotalImpuesto.setText("0.00");
         this.crearDetalles();
+        btnGuardar.setVisible(true);
     }
 
     private void mensajeError(String mensaje) {
@@ -268,6 +268,7 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
         cboNumPagina = new javax.swing.JComboBox<>();
         cboTotalPorPagina = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
+        btnVerIngreso = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -367,38 +368,47 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
 
         jLabel11.setText("Total de registros por página");
 
+        btnVerIngreso.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnVerIngreso.setText("Ver Ingreso");
+        btnVerIngreso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerIngresoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnDesactivar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(249, 249, 249)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cboNumPagina, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cboTotalPorPagina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14)
-                        .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 897, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnDesactivar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(249, 249, 249)
-                                .addComponent(jLabel10)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cboNumPagina, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel11)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cboTotalPorPagina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lblTotalRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addComponent(lblTotalRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(btnVerIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 897, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 20, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14)
+                .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -408,7 +418,8 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1)
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar)
-                    .addComponent(btnNuevo))
+                    .addComponent(btnNuevo)
+                    .addComponent(btnVerIngreso))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -679,11 +690,13 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
     private void btnDesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDesactivarActionPerformed
         if (tablaListado.getSelectedRowCount() == 1) {
             String id = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 0));
-            String nombre = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 2));
-            if (JOptionPane.showConfirmDialog(this, "¿Deseas desactivar el registro: " + nombre + "?", "Desactivar", JOptionPane.YES_NO_OPTION) == 0) {
+            String comprobante = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 5));
+            String serie = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 6));
+            String numero = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 7));
+            if (JOptionPane.showConfirmDialog(this, "¿Deseas desactivar el registro: " + comprobante + " " + serie + "-" + numero + "?", "Anular", JOptionPane.YES_NO_OPTION) == 0) {
                 String resp = this.CONTROL.anular(Integer.parseInt(id));
                 if (resp.equals("OK")) {
-                    this.mensajeOk("Registro desactivado");
+                    this.mensajeOk("Registro anulado");
                     this.listar("", false);
                 } else {
                     this.mensajeError(resp);
@@ -793,6 +806,37 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnQuitarActionPerformed
 
+    private void btnVerIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerIngresoActionPerformed
+        if (tablaListado.getSelectedRowCount() == 1) {
+            String id = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 0));
+            String idProveedor = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 3));
+            String nombreProveedor = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 4));
+            String tipoComprobante = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 5));
+            String serie = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 6));
+            String numero = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 7));
+            String impuesto = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 9));
+
+            txtIdProveedor.setText(idProveedor);
+            txtNombreProveedor.setText(nombreProveedor);
+            cboTipoComprobante.setSelectedItem(tipoComprobante);
+            txtSerieComprobante.setText(serie);
+            txtNumComprobante.setText(numero);
+            txtImpuesto.setText(impuesto);
+
+            this.modeloDetalles = CONTROL.listarDetalle(Integer.parseInt(id));
+            tablaDetalles.setModel(modeloDetalles);
+            this.calcularTotales();
+
+            tabGeneral.setEnabledAt(1, true);
+            tabGeneral.setEnabledAt(0, false);
+            tabGeneral.setSelectedIndex(1);
+            btnGuardar.setVisible(false);
+
+        } else {
+            this.mensajeError("Seleccione el ingreso a mostrar.");
+        }
+    }//GEN-LAST:event_btnVerIngresoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
@@ -803,6 +847,7 @@ public class FrmIngreso extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnQuitar;
     private javax.swing.JButton btnSeleccionaProveedor;
     private javax.swing.JButton btnVerArticulo;
+    private javax.swing.JButton btnVerIngreso;
     private javax.swing.JComboBox<String> cboNumPagina;
     private javax.swing.JComboBox<String> cboTipoComprobante;
     private javax.swing.JComboBox<String> cboTotalPorPagina;

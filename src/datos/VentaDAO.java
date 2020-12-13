@@ -10,9 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import database.Conexion;
-import datos.interfaces.CrudIngresoInterface;
-import entidades.DetalleIngreso;
-import entidades.Ingreso;
+import datos.interfaces.CrudVentaInterface;
+import entidades.DetalleVenta;
+import entidades.Venta;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -23,30 +23,31 @@ import javax.swing.JOptionPane;
  *
  * @author JRonald
  */
-public class IngresoDAO implements CrudIngresoInterface<Ingreso, DetalleIngreso> {
+public class VentaDAO implements CrudVentaInterface<Venta, DetalleVenta> {
 
     private final Conexion CONN;
     private PreparedStatement ps;
     private ResultSet rs;
     private boolean resp;
 
-    public IngresoDAO() {
+    public VentaDAO() {
         this.CONN = Conexion.getInstancia();
     }
 
     @Override
-    public List<Ingreso> listar(String texto, int totalPorPagina, int numPagina) {
-        List<Ingreso> registros = new ArrayList();
+    public List<Venta> listar(String texto, int totalPorPagina, int numPagina) {
+        List<Venta> registros = new ArrayList();
         try {
             /*SQL Server 2019 y DB2*/
-            ps = CONN.conectar().prepareStatement("SELECT i.id,"
-                    + " i.usuario_id, u.nombre as usuario_nombre, i.persona_id, p.nombre as persona_nombre,"
-                    + " i.tipo_comprobante, i.serie_comprobante, i.num_comprobante,"
-                    + " i.fecha, i.impuesto, i.total, i.estado"
-                    + " FROM ingreso i INNER JOIN usuario u ON i.usuario_id=u.id"
-                    + "	INNER JOIN persona p ON i.persona_id=p.id"
+            ps = CONN.conectar().prepareStatement("SELECT v.id,"
+                    + " v.usuario_id, u.nombre as usuario_nombre, v.persona_id,"
+                    + " p.nombre as persona_nombre,"
+                    + " v.tipo_comprobante, v.serie_comprobante, v.num_comprobante,"
+                    + " v.fecha, v.impuesto, v.total, v.estado"
+                    + " FROM venta v INNER JOIN usuario u ON v.usuario_id=u.id"
+                    + "	INNER JOIN persona p ON v.persona_id=p.id"
                     + "	WHERE p.nombre LIKE ?"
-                    + " ORDER BY i.id ASC"
+                    + " ORDER BY v.id ASC"
                     + " OFFSET ? ROWS"
                     + " FETCH NEXT ? ROWS ONLY",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -61,11 +62,8 @@ public class IngresoDAO implements CrudIngresoInterface<Ingreso, DetalleIngreso>
             while (rs.next()) {
                 /*Categoria bean = mapper.mapRow(rs);
                     registros.add(bean);*/
-                registros.add(new Ingreso(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getDate(9), rs.getDouble(10), rs.getDouble(11), rs.getString(12)));
+                registros.add(new Venta(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getDate(9), rs.getDouble(10), rs.getDouble(11), rs.getString(12)));
             }
-            //} else {
-            //    JOptionPane.showMessageDialog(null, "No hay registros que mostrar");
-            //}
             ps.close();
             rs.close();
         } catch (SQLException e) {
@@ -79,14 +77,14 @@ public class IngresoDAO implements CrudIngresoInterface<Ingreso, DetalleIngreso>
     }
 
     @Override
-    public List<DetalleIngreso> listarDetalle(int id) {
-        List<DetalleIngreso> registros=new ArrayList();
+    public List<DetalleVenta> listarDetalle(int id) {
+        List<DetalleVenta> registros=new ArrayList();
         try {
-            ps=CONN.conectar().prepareStatement("SELECT a.id,a.codigo,a.nombre,d.cantidad,d.precio,(d.cantidad*precio) as sub_total FROM detalle_ingreso d INNER JOIN articulo a ON d.articulo_id=a.id WHERE d.ingreso_id=?");
+            ps=CONN.conectar().prepareStatement("SELECT a.id,a.codigo,a.nombre,a.stock,d.cantidad,d.precio,d.descuento,((d.cantidad*precio) - d.descuento) as sub_total FROM detalle_venta d INNER JOIN articulo a ON d.articulo_id=a.id WHERE d.venta_id=?");
             ps.setInt(1,id);
             rs=ps.executeQuery();
             while(rs.next()){
-                registros.add(new DetalleIngreso(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getDouble(5),rs.getDouble(6)));
+                registros.add(new DetalleVenta(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getInt(5),rs.getDouble(6),rs.getDouble(7),rs.getDouble(8)));
             }
             ps.close();
             rs.close();
@@ -101,7 +99,7 @@ public class IngresoDAO implements CrudIngresoInterface<Ingreso, DetalleIngreso>
     }
 
     @Override
-    public boolean insertar(Ingreso obj) {
+    public boolean insertar(Venta obj) {
         resp = false;
         // Una instancia de conexion para usar transacciones
         Connection connTx = null;
@@ -109,12 +107,12 @@ public class IngresoDAO implements CrudIngresoInterface<Ingreso, DetalleIngreso>
             connTx = CONN.conectar();
             connTx.setAutoCommit(false);
             //MySQL
-            //String sqlInsertIngreso="INSERT INTO ingreso (persona_id,usuario_id,fecha,tipo_comprobante,serie_comprobante,num_comprobante,impuesto,total,estado) VALUES (?,?,now(),?,?,?,?,?,?)";
+            //String sqlInsertVenta="INSERT INTO venta(persona_id,usuario_id,fecha,tipo_comprobante,serie_comprobante,num_comprobante,impuesto,total,estado) VALUES (?,?,now(),?,?,?,?,?,?)";
             //SQL Server
-            String sqlInsertIngreso = "INSERT INTO ingreso(persona_id, usuario_id, fecha, tipo_comprobante, serie_comprobante, num_comprobante, impuesto, total, estado) VALUES(?,?,GETDATE(),?,?,?,?,?,?)";
+            String sqlInsertVenta = "INSERT INTO venta(persona_id, usuario_id, fecha, tipo_comprobante, serie_comprobante, num_comprobante, impuesto, total, estado) VALUES(?,?,GETDATE(),?,?,?,?,?,?)";
             //DB2
-            //String sqlInsertIngreso = "INSERT INTO ingreso(persona_id, usuario_id, fecha, tipo_comprobante, serie_comprobante, num_comprobante, impuesto, total, estado) VALUES(?,?,(SELECT CURRENT TIMESTAMP - 1 DAY - 5 HOUR FROM SYSIBM.SYSDUMMY1),?,?,?,?,?,?)";
-            ps = CONN.conectar().prepareStatement(sqlInsertIngreso, PreparedStatement.RETURN_GENERATED_KEYS);
+            //String sqlInsertVenta = "INSERT INTO venta(persona_id, usuario_id, fecha, tipo_comprobante, serie_comprobante, num_comprobante, impuesto, total, estado) VALUES(?,?,(SELECT CURRENT TIMESTAMP - 1 DAY - 5 HOUR FROM SYSIBM.SYSDUMMY1),?,?,?,?,?,?)";
+            ps = CONN.conectar().prepareStatement(sqlInsertVenta, PreparedStatement.RETURN_GENERATED_KEYS);
             //ResultSet.TYPE_FORWARD_ONLY);
             ps.setInt(1, obj.getPersonaId());
             ps.setInt(2, obj.getUsuarioId());
@@ -132,13 +130,14 @@ public class IngresoDAO implements CrudIngresoInterface<Ingreso, DetalleIngreso>
             }
 
             if (filasAfectadas == 1) {
-                String sqlInsertDetalle = "INSERT INTO detalle_ingreso(ingreso_id,articulo_id,cantidad,precio) VALUES(?,?,?,?)";
+                String sqlInsertDetalle = "INSERT INTO detalle_venta(venta_id,articulo_id,cantidad,precio,descuento) VALUES(?,?,?,?,?)";
                 ps = connTx.prepareStatement(sqlInsertDetalle);
-                for (DetalleIngreso item : obj.getDetalles()) {
+                for (DetalleVenta item : obj.getDetalles()) {
                     ps.setInt(1, idGenerado);
                     ps.setInt(2, item.getArticuloId());
                     ps.setInt(3, item.getCantidad());
                     ps.setDouble(4, item.getPrecio());
+                    ps.setDouble(5, item.getDescuento());
                     resp = ps.executeUpdate() > 0;
                 }
                 connTx.commit();
@@ -152,7 +151,7 @@ public class IngresoDAO implements CrudIngresoInterface<Ingreso, DetalleIngreso>
                     JOptionPane.showMessageDialog(null, e.getMessage());
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(IngresoDAO.class.getName()).log(Level.SEVERE, null, ex.getMessage());
+                Logger.getLogger(VentaDAO.class.getName()).log(Level.SEVERE, null, ex.getMessage());
             }
             System.err.println(e.getMessage());
         } finally {
@@ -167,7 +166,7 @@ public class IngresoDAO implements CrudIngresoInterface<Ingreso, DetalleIngreso>
                     connTx.close();
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(IngresoDAO.class.getName()).log(Level.SEVERE, null, ex.getMessage());
+                Logger.getLogger(VentaDAO.class.getName()).log(Level.SEVERE, null, ex.getMessage());
             }
 
         }
@@ -178,7 +177,7 @@ public class IngresoDAO implements CrudIngresoInterface<Ingreso, DetalleIngreso>
     public boolean anular(int id) {
         resp = false;
         try {
-            ps = CONN.conectar().prepareStatement("UPDATE ingreso SET estado='Anulado' WHERE id=?");
+            ps = CONN.conectar().prepareStatement("UPDATE venta SET estado='Anulado' WHERE id=?");
             ps.setInt(1, id);
             if (ps.executeUpdate() > 0) {
                 resp = true;
@@ -197,7 +196,7 @@ public class IngresoDAO implements CrudIngresoInterface<Ingreso, DetalleIngreso>
     public int total() {
         int totalRegistros = 0;
         try {
-            ps = CONN.conectar().prepareStatement("SELECT COUNT(id) as CONTADOR FROM ingreso");
+            ps = CONN.conectar().prepareStatement("SELECT COUNT(id) as CONTADOR FROM venta");
             rs = ps.executeQuery();
             while (rs.next()) {
                 totalRegistros = rs.getInt("CONTADOR");
@@ -218,7 +217,7 @@ public class IngresoDAO implements CrudIngresoInterface<Ingreso, DetalleIngreso>
     public boolean existe(String texto1, String texto2) {
         resp = false;
         try {
-            ps = CONN.conectar().prepareStatement("SELECT id FROM ingreso WHERE serie_comprobante = ? AND num_comprobante=?",
+            ps = CONN.conectar().prepareStatement("SELECT id FROM venta WHERE serie_comprobante = ? AND num_comprobante=?",
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
             //ps = CONN.conectar().prepareStatement("SELECT nombre FROM categoria WHERE nombre = ?", ResultSet.TYPE_FORWARD_ONLY,ResultSet.CONCUR_READ_ONLY);

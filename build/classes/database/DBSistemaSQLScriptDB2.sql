@@ -222,3 +222,36 @@ FOR EACH ROW
 	UPDATE articulo SET articulo.stock = articulo.stock + N.cantidad
 	WHERE articulo.id = N.articulo_id;
 
+
+/*trigger para actualizar stock en cada ingreso*/
+/*aplicado en la tabla DETALLE_INGRESO*/
+CREATE TRIGGER tr_updStockIngresoAnular  
+AFTER UPDATE ON ingreso 
+REFERENCING NEW AS N
+FOR EACH ROW 
+	UPDATE ARTICULO t
+	SET t.stock = t.stock - di.cantidad
+	FROM ARTICULO a INNER JOIN DETALLE_INGRESO di
+	ON di.ARTICULO_ID = a.ID AND di.INGRESO_ID = N.id
+
+
+/*trigger para actualizar stock cuando se ANULAR un ingreso*/
+/*aplicado en la tabla INGRESO*/
+/**   PERO NO FUNCIONA   */
+DROP TRIGGER tr_updStockIngresoAnular ;
+CREATE TRIGGER tr_updStockIngresoAnular  
+AFTER UPDATE ON ingreso 
+REFERENCING NEW AS N OLD AS O
+FOR EACH ROW 
+	UPDATE ARTICULO 
+	SET ARTICULO.stock = ARTICULO.stock - di.cantidad
+	FROM ARTICULO a JOIN DETALLE_INGRESO di
+	ON di.ARTICULO_ID = a.ID AND di.INGRESO_ID = N.ID 
+ 	WHERE ARTICULO.ID = a.ID
+
+/*query que funciona*/
+UPDATE ARTICULO 
+	SET ARTICULO.stock = ARTICULO.stock - di.cantidad
+	FROM ARTICULO a INNER JOIN DETALLE_INGRESO di
+	ON di.ARTICULO_ID = a.ID AND di.INGRESO_ID = 3 WHERE ARTICULO.ID = a.ID 
+	

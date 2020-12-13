@@ -5,14 +5,10 @@
         <group>
             <file>file:/D:/WorkspaceJavaFX/Sistema/src/database/Conexion.java</file>
             <file>file:/D:/WorkspaceJavaFX/Sistema/src/datos/IngresoDAO.java</file>
-            <file>file:/D:/WorkspaceJavaFX/Sistema/src/datos/UsuarioDAO.java</file>
-            <file>file:/D:/WorkspaceJavaFX/Sistema/src/presentacion/FrmSeleccionarArticuloCompra.java</file>
             <file>file:/D:/WorkspaceJavaFX/Sistema/src/database/DBSistemaSQLScriptDB2.sql</file>
             <file>file:/D:/WorkspaceJavaFX/Sistema/src/datos/ArticuloDAO.java</file>
             <file>file:/D:/WorkspaceJavaFX/Sistema/src/database/DBSistemaSQLScriptSQLSrv.sql</file>
             <file>file:/D:/WorkspaceJavaFX/Sistema/src/presentacion/FrmIngreso.java</file>
-            <file>file:/D:/WorkspaceJavaFX/Sistema/src/database/PruebaConexion.java</file>
-            <file>file:/D:/WorkspaceJavaFX/Sistema/src/negocio/IngresoControl.java</file>
         </group>
     </open-files>
 </project-private>

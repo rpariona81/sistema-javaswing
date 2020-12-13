@@ -68,6 +68,28 @@ public class IngresoControl {
         return this.modeloTabla;
     }
 
+    public DefaultTableModel listarDetalle(int id){
+        List<DetalleIngreso> lista=new ArrayList();
+        lista.addAll(DATOS.listarDetalle(id));
+        
+        String[] titulos={"ID","CODIGO","ARTICULO","CANTIDAD","PRECIO","SUBTOTAL"};
+        this.modeloTabla=new DefaultTableModel(null,titulos);        
+        
+        //String[] registro = new String[6];
+        Object[] registro = new Object[6];
+        
+        for (DetalleIngreso item:lista){
+            registro[0]=item.getArticuloId();
+            registro[1]=item.getArticuloCodigo();
+            registro[2]=item.getArticuloNombre();
+            registro[3]=Integer.toString(item.getCantidad());
+            registro[4]=Double.toString(item.getPrecio());
+            registro[5]=Double.toString(item.getSubTotal());            
+            this.modeloTabla.addRow(registro);
+        }
+        return this.modeloTabla;
+    }
+    
     public Articulo obteneArticuloCodigoIngreso(String codigo){
         Articulo art = DATOSART.obtenerArticuloCodigoIngreso(codigo);
         return art;

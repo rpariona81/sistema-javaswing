@@ -17,19 +17,19 @@ import javax.swing.JOptionPane;
 public final class Conexion {
 
     //SQL SERVER 2019
-    /*private static String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    private static String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     private static String URL = "jdbc:sqlserver://localhost:1263;databaseName=";
     private static String DATABASE = "BLUDB";
     private static String USER = "sa";
     private static String PASSWORD = "JPariona2020";
-    */
+    
     //DB2
-    private static String DRIVER = "com.ibm.db2.jcc.DB2Driver";
+    /*private static String DRIVER = "com.ibm.db2.jcc.DB2Driver";
     private static String URL = "jdbc:db2://dashdb-txn-sbox-yp-dal09-14.services.dal.bluemix.net:50000/";
     private static String DATABASE = "BLUDB";
     private static String USER = "grd97511";
     private static String PASSWORD = "lqt8nczsc+dhp4p7";
-    
+    */
     //MYSQL
     /*private final String DRIVER="com.mysql.jdbc.Driver";
     private final String URL="jdbc:mysql://localhost:3306/";

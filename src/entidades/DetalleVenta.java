@@ -9,45 +9,46 @@ package entidades;
  *
  * @author JRonald
  */
-public class DetalleIngreso {
+public class DetalleVenta {
     private int id;
-    private int ingresoId;
+    private int ventaId;
     private int articuloId;
     private String articuloCodigo;
     private String articuloNombre;
+    private int articuloStock;
     private int cantidad;
     private double precio;
+    private double descuento;
     private double subTotal;
 
-    public DetalleIngreso() {
+    public DetalleVenta() {
     }
 
-    public DetalleIngreso(int articuloId, int cantidad, double precio) {
-        this.articuloId = articuloId;
-        this.cantidad = cantidad;
-        this.precio = precio;
-    }
-
-    public DetalleIngreso(int id, int ingresoId, int articuloId, String articuloCodigo, String articuloNombre, int cantidad, double precio, double subTotal) {
+    public DetalleVenta(int id, int ventaId, int articuloId, String articuloCodigo, String articuloNombre, int articuloStock, int cantidad, double precio, double descuento, double subTotal) {
         this.id = id;
-        this.ingresoId = ingresoId;
+        this.ventaId = ventaId;
         this.articuloId = articuloId;
         this.articuloCodigo = articuloCodigo;
         this.articuloNombre = articuloNombre;
+        this.articuloStock = articuloStock;
         this.cantidad = cantidad;
         this.precio = precio;
-        this.subTotal = subTotal;
-    }
-    
-    public DetalleIngreso(int articuloId, String articuloCodigo, String articuloNombre, int cantidad, double precio, double subTotal) {
-        this.articuloId = articuloId;
-        this.articuloCodigo = articuloCodigo;
-        this.articuloNombre = articuloNombre;
-        this.cantidad = cantidad;
-        this.precio = precio;
+        this.descuento = descuento;
         this.subTotal = subTotal;
     }
 
+    public DetalleVenta(int articuloId, String articuloCodigo, String articuloNombre, int articuloStock, int cantidad, double precio, double descuento, double subTotal) {
+        this.articuloId = articuloId;
+        this.articuloCodigo = articuloCodigo;
+        this.articuloNombre = articuloNombre;
+        this.articuloStock = articuloStock;
+        this.cantidad = cantidad;
+        this.precio = precio;
+        this.descuento = descuento;
+        this.subTotal = subTotal;
+    }
+
+    
     public int getId() {
         return id;
     }
@@ -56,12 +57,12 @@ public class DetalleIngreso {
         this.id = id;
     }
 
-    public int getIngresoId() {
-        return ingresoId;
+    public int getVentaId() {
+        return ventaId;
     }
 
-    public void setIngresoId(int ingresoId) {
-        this.ingresoId = ingresoId;
+    public void setVentaId(int ventaId) {
+        this.ventaId = ventaId;
     }
 
     public int getArticuloId() {
@@ -88,6 +89,14 @@ public class DetalleIngreso {
         this.articuloNombre = articuloNombre;
     }
 
+    public int getArticuloStock() {
+        return articuloStock;
+    }
+
+    public void setArticuloStock(int articuloStock) {
+        this.articuloStock = articuloStock;
+    }
+
     public int getCantidad() {
         return cantidad;
     }
@@ -102,6 +111,14 @@ public class DetalleIngreso {
 
     public void setPrecio(double precio) {
         this.precio = precio;
+    }
+
+    public double getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(double descuento) {
+        this.descuento = descuento;
     }
 
     public double getSubTotal() {

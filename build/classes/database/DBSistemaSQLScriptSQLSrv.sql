@@ -218,6 +218,7 @@ INSERT INTO rol(nombre, descripcion) VALUES('Vendedor','Vendedor del sistema');
 INSERT INTO rol(nombre, descripcion) VALUES('Almacenero','Almacenero del sistema');
 
 /*trigger para actualizar stock en cada ingreso*/
+/*aplicado en la tabla DETALLE_INGRESO*/
 CREATE TRIGGER tr_updStockIngreso ON detalle_ingreso 
 AFTER INSERT 
 AS 
@@ -228,4 +229,18 @@ SET @ID_ART_DET_ING= (SELECT articulo_id FROM inserted)
 BEGIN 
 	UPDATE articulo SET articulo.stock = articulo.stock + @CANT 
 	WHERE articulo.id = @ID_ART_DET_ING;
+END;
+
+/*trigger para actualizar stock cuando se ANULAR un ingreso*/
+/*aplicado en la tabla INGRESO*/
+CREATE TRIGGER [dbo].[tr_updStockIngresoAnular] ON [dbo].[ingreso] 
+AFTER UPDATE 
+AS 
+DECLARE @ID_ING INT 
+DECLARE @ART_ID INT 
+SET @ID_ING= (SELECT id FROM inserted)
+BEGIN 
+	UPDATE articulo  
+	SET stock = stock - di.cantidad
+	FROM articulo a JOIN detalle_ingreso di ON di.articulo_id = a.id AND di.ingreso_id = @ID_ING;
 END;
