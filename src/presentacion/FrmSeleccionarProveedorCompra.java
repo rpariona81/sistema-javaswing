@@ -658,7 +658,7 @@ public class FrmSeleccionarProveedorCompra extends javax.swing.JDialog {
                 this.setVisible(false);
             }
         } else {
-            this.mensajeError("Seleccione 1 registro a desactivar");
+            this.mensajeError("Debe seleccionar un proveedor");
         }
     }//GEN-LAST:event_btnSeleccionarProveedorActionPerformed
 

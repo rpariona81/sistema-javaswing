@@ -32,7 +32,7 @@ import negocio.ArticuloControl;
  */
 public class FrmSeleccionarArticuloCompra extends javax.swing.JDialog {
 
-    FrmIngreso vista;
+    private FrmIngreso vista;
     
     private final ArticuloControl CONTROL;
     private String accion;

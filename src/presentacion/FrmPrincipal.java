@@ -142,6 +142,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         mnuVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/images/ventas.png"))); // NOI18N
         mnuVentas.setText("Ventas");
+        mnuVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuVentasActionPerformed(evt);
+            }
+        });
 
         jMenuItem5.setText("Clientes");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
@@ -152,6 +157,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         mnuVentas.add(jMenuItem5);
 
         jMenuItem6.setText("Ventas");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         mnuVentas.add(jMenuItem6);
 
         menuBar.add(mnuVentas);
@@ -184,6 +194,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         mnuConsultas.add(itemConsultaCompras);
 
         itemConsultaVentas.setText("Consulta ventas");
+        itemConsultaVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemConsultaVentasActionPerformed(evt);
+            }
+        });
         mnuConsultas.add(itemConsultaVentas);
 
         menuBar.add(mnuConsultas);
@@ -275,6 +290,22 @@ public class FrmPrincipal extends javax.swing.JFrame {
         escritorio.add(frm);
         frm.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void mnuVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuVentasActionPerformed
+        
+    }//GEN-LAST:event_mnuVentasActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        FrmVenta frm = new FrmVenta(this);
+        escritorio.add(frm);
+        frm.setVisible(true);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void itemConsultaVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemConsultaVentasActionPerformed
+        FrmConsultaVentasFecha frm = new FrmConsultaVentasFecha();
+        escritorio.add(frm);
+        frm.setVisible(true);
+    }//GEN-LAST:event_itemConsultaVentasActionPerformed
 
     /**
      * @param args the command line arguments

@@ -3,12 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/WorkspaceJavaFX/Sistema/src/database/Conexion.java</file>
-            <file>file:/D:/WorkspaceJavaFX/Sistema/src/datos/IngresoDAO.java</file>
-            <file>file:/D:/WorkspaceJavaFX/Sistema/src/database/DBSistemaSQLScriptDB2.sql</file>
-            <file>file:/D:/WorkspaceJavaFX/Sistema/src/datos/ArticuloDAO.java</file>
-            <file>file:/D:/WorkspaceJavaFX/Sistema/src/database/DBSistemaSQLScriptSQLSrv.sql</file>
-            <file>file:/D:/WorkspaceJavaFX/Sistema/src/presentacion/FrmIngreso.java</file>
+            <file>file:/D:/WorkspaceJavaFX/Sistema/src/presentacion/FrmConsultaVentasFecha.java</file>
+            <file>file:/D:/WorkspaceJavaFX/Sistema/src/presentacion/FrmPrincipal.java</file>
         </group>
     </open-files>
 </project-private>

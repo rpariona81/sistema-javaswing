@@ -48,6 +48,12 @@ public class DetalleVenta {
         this.subTotal = subTotal;
     }
 
+    public DetalleVenta(int articuloId, int cantidad, double precio, double descuento) {
+        this.articuloId = articuloId;
+        this.cantidad = cantidad;
+        this.precio = precio;
+        this.descuento = descuento;
+    }
     
     public int getId() {
         return id;

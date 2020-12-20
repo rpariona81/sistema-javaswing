@@ -244,3 +244,34 @@ BEGIN
 	SET stock = stock - di.cantidad
 	FROM articulo a JOIN detalle_ingreso di ON di.articulo_id = a.id AND di.ingreso_id = @ID_ING;
 END;
+
+/*trigger para actualizar stock en cada VENTA*/
+/*aplicado en la tabla DETALLE_VENTA*/
+CREATE TRIGGER [dbo].[tr_updStockVenta] ON [dbo].[detalle_venta] 
+AFTER INSERT 
+AS 
+DECLARE @CANT INT 
+DECLARE @ID_ART_DET_ING INT 
+SET @CANT= (SELECT cantidad FROM inserted)
+SET @ID_ART_DET_ING= (SELECT articulo_id FROM inserted)
+BEGIN 
+	UPDATE articulo SET articulo.stock = articulo.stock - @CANT 
+	WHERE articulo.id = @ID_ART_DET_ING;
+END;
+
+
+/*trigger para actualizar stock cuando se ANULAR una VENTA*/
+/*aplicado en la tabla VENTA*/
+CREATE TRIGGER [dbo].[tr_updStockVentaAnular] ON [dbo].[venta] 
+AFTER UPDATE 
+AS 
+DECLARE @ID_ING INT 
+DECLARE @ART_ID INT 
+SET @ID_ING= (SELECT id FROM inserted)
+BEGIN 
+    UPDATE articulo  
+    SET stock = stock - dv.cantidad
+    FROM articulo a 
+    JOIN detalle_venta dv 
+    ON dv.articulo_id = a.id AND dv.venta_id = @ID_ING;
+END;

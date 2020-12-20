@@ -14,6 +14,7 @@ import datos.interfaces.CrudVentaInterface;
 import entidades.DetalleVenta;
 import entidades.Venta;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -78,21 +79,21 @@ public class VentaDAO implements CrudVentaInterface<Venta, DetalleVenta> {
 
     @Override
     public List<DetalleVenta> listarDetalle(int id) {
-        List<DetalleVenta> registros=new ArrayList();
+        List<DetalleVenta> registros = new ArrayList();
         try {
-            ps=CONN.conectar().prepareStatement("SELECT a.id,a.codigo,a.nombre,a.stock,d.cantidad,d.precio,d.descuento,((d.cantidad*precio) - d.descuento) as sub_total FROM detalle_venta d INNER JOIN articulo a ON d.articulo_id=a.id WHERE d.venta_id=?");
-            ps.setInt(1,id);
-            rs=ps.executeQuery();
-            while(rs.next()){
-                registros.add(new DetalleVenta(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getInt(5),rs.getDouble(6),rs.getDouble(7),rs.getDouble(8)));
+            ps = CONN.conectar().prepareStatement("SELECT a.id,a.codigo,a.nombre,a.stock,d.cantidad,d.precio,d.descuento,((d.cantidad*precio) - d.descuento) as sub_total FROM detalle_venta d INNER JOIN articulo a ON d.articulo_id=a.id WHERE d.venta_id=?");
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                registros.add(new DetalleVenta(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getDouble(6), rs.getDouble(7), rs.getDouble(8)));
             }
             ps.close();
             rs.close();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
-        } finally{
-            ps=null;
-            rs=null;
+        } finally {
+            ps = null;
+            rs = null;
             CONN.desconectar();
         }
         return registros;
@@ -238,6 +239,79 @@ public class VentaDAO implements CrudVentaInterface<Venta, DetalleVenta> {
             CONN.desconectar();
         }
         return resp;
+    }
+
+    public String ultimoSerie(String tipoComprobante) {
+        String serieComprobante = "";
+        try {
+            ps = CONN.conectar().prepareStatement("SELECT TOP 1"
+                    + " serie_comprobante"
+                    + " FROM venta WHERE tipo_comprobante = ?"
+                    + " ORDER BY serie_comprobante DESC");
+            ps.setString(1, tipoComprobante);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                serieComprobante = rs.getString("serie_comprobante");
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            ps = null;
+            rs = null;
+            CONN.desconectar();
+        }
+        return serieComprobante;
+    }
+
+    public String ultimoNumero(String tipoComprobante, String serieComprobante) {
+        String numComprobante = "";
+        try {
+            ps = CONN.conectar().prepareStatement("SELECT TOP 1"
+                    + " num_comprobante FROM venta"
+                    + " WHERE tipo_comprobante=? AND serie_comprobante=?"
+                    + " ORDER BY num_comprobante DESC");
+            ps.setString(1, tipoComprobante);
+            ps.setString(2, serieComprobante);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                numComprobante = rs.getString("num_comprobante");
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            ps = null;
+            rs = null;
+            CONN.desconectar();
+        }
+        return numComprobante;
+    }
+    
+    public List<Venta> consultaFechas(Date fechaInicio, Date fechaFin) {
+        List<Venta> registros=new ArrayList();
+        try {
+            ps=CONN.conectar().prepareStatement("SELECT v.id,v.usuario_id,u.nombre as usuario_nombre,v.persona_id,p.nombre as persona_nombre,v.tipo_comprobante,v.serie_comprobante,v.num_comprobante,v.fecha,v.impuesto,v.total,v.estado FROM venta v INNER JOIN persona p ON v.persona_id=p.id INNER JOIN usuario u ON v.usuario_id=u.id WHERE v.fecha>=? AND v.fecha<=?");
+            ps.setDate(1,fechaInicio);            
+            ps.setDate(2,fechaFin);
+            rs=ps.executeQuery();
+            while(rs.next()){
+                registros.add(new Venta(rs.getInt(1),rs.getInt(2),rs.getString(3),rs.getInt(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getDate(9),rs.getDouble(10),rs.getDouble(11),rs.getString(12)));
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally{
+            ps=null;
+            rs=null;
+            CONN.desconectar();
+        }
+        return registros;
     }
 
 }
